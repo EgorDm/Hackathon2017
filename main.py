@@ -10,8 +10,7 @@ from logic.url_tools import valid_url
 
 app = Flask(__name__)
 
-model = 'english'
-model_path = 'saves/{}/save.model'.format(model)
+model_path = 'saves/{}/save.model'
 
 
 @app.route('/')
@@ -25,7 +24,7 @@ def classify():
     if not valid_url(url): return make_error('Not valid url!')
     scrap_data = crawler.scrap_page(url)
     data = crawler.special_to_text(scrap_data)
-    positive = mlogic.classify(data, model_path)
+    positive = mlogic.classify(data, model_path.format('english'))
     return jsonify({
         'success': True,
         'positive': bool(positive),

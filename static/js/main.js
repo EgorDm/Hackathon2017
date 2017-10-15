@@ -47,11 +47,11 @@ $(document).ready(function() {
                 console.log(response.positive);
                 $('#modalContent').html(response.preview);
                 if (response.positive){
-                    $("#resultText").text("this page is about corporate social responsability");
+                    $("#resultText").text("this page is about corporate social responsibility");
 
                 }
                 else{
-                    $("#resultText").text("this page is not about corporate social responsability");
+                    $("#resultText").text("this page is not about corporate social responsibility");
                 }
                 $("#resultSector").removeClass('hide');
             })
