@@ -10,10 +10,12 @@ allowed_types = ['h1', 'h2', 'h3', 'h5', 'h6', 'p', 'h1']
 
 
 def scrap_page(url):
-    ssl._create_default_https_context = ssl._create_unverified_context
-    q = Request(url)
-    html = urlopen(q).read()
-    return scrap_html(html)
+    try:
+        ssl._create_default_https_context = ssl._create_unverified_context
+        q = Request(url)
+        html = urlopen(q).read()
+        return scrap_html(html)
+    except: return []
 
 def scrap_html(html):
     soup = BeautifulSoup(html, "html.parser")
