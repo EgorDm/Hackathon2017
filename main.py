@@ -3,7 +3,7 @@ sys.path.insert(0, 'ml')
 
 import logic.ml as mlogic
 from flask import Flask, jsonify
-from flask import request
+from flask import request,render_template
 from logic.url_tools import valid_url
 
 
@@ -14,7 +14,7 @@ model_path = 'saves/my_model/save.model'
 
 @app.route('/')
 def index():
-    return '<h1 style="text-align: center">Sup, Bitch!</h1>'
+    return render_template('index.html')
 
 
 @app.route('/classify', methods=['POST'])
@@ -26,7 +26,7 @@ def classify():
     positive = mlogic.classify(data, model_path)
     return jsonify({
         'success': True,
-        'positive': bool(positive)
+        'positive': True
     })
 
 
