@@ -1,6 +1,6 @@
 const loadingArray = ['is procastinating','is learning','neemt er een poar','is using your data','is mining bitcoin','is coding','Is van t rad af','is predicting','is calculating','is ordering','is reading','is writing','is parsing'];
 const regexurl = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])?/;
-
+let test = '<p3>feffe</p3>';
 let incrementalTimer = 0;
 // takes care of the search function
 function timerFunction(){
@@ -31,7 +31,7 @@ $(document).ready(function() {
         searchinput = $("#search").val();
         output = {url : searchinput};
         console.log(output);
-        let is_url=regexurl.test(searchinput);
+        is_url=regexurl.test(searchinput);
         if(is_url){
             timerFunction();
             $("#mainSector").addClass('hide');
@@ -40,9 +40,20 @@ $(document).ready(function() {
 
             })
             .done(function(response) {
+                $("#homeText").addClass('hide');
                 $("#loadingSector").addClass('hide');
                 $("#mainSector").removeClass('hide');
                 console.log(response);
+                console.log(response.positive);
+                $('#modalContent').html(response.preview);
+                if (response.positive){
+                    $("#resultText").text("this page is about corporate social responsability");
+
+                }
+                else{
+                    $("#resultText").text("this page is not about corporate social responsability");
+                }
+                $("#resultSector").removeClass('hide');
             })
             .fail(function(response) {
                 Materialize.toast('there has been an internal error, please wait', 4000);
@@ -54,5 +65,8 @@ $(document).ready(function() {
 
     });
 
+    $("#resultButton").click( function(event) {
+        $('#resultModal').modal();
 
+    });
 });

@@ -21,6 +21,8 @@ def scrap_page(url):
 
 def _first_pass(document):
     soup = BeautifulSoup(document, "html.parser")
+    for script in soup(["script", "style"]):
+        script.extract()
     for comments in soup.findAll(text=lambda text: isinstance(text, Comment)):
         comments.extract()
     for tag in constants.tag_blacklist:
