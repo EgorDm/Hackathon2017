@@ -10,7 +10,7 @@ from logic.url_tools import valid_url
 
 app = Flask(__name__)
 
-model = 'hybrid'
+model = 'english'
 model_path = 'saves/{}/save.model'.format(model)
 
 

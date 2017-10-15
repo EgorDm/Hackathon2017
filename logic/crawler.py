@@ -10,17 +10,25 @@ allowed_types = ['h1', 'h2', 'h3', 'h5', 'h6', 'p', 'h1']
 
 
 def scrap_page(url):
+    print('check ' + url)
     ssl._create_default_https_context = ssl._create_unverified_context
     q = Request(url)
     html = urlopen(q).read()
-    ret = _first_pass(html)
+    return scrap_html(html)
+
+def scrap_html(html):
+    soup = BeautifulSoup(html, "html.parser")
+    extra = []
+    for match in soup.findAll(['iframe', 'frame']):
+        if 'src' in match.attrs:
+            extra += scrap_page(match.attrs['src'])
+    ret = _first_pass(soup)
     ret = _second_pass(ret)
     ret = _third_pass(ret)
-    return ret
+    return ret + extra # TODO: split to smaller for checking
 
 
-def _first_pass(document):
-    soup = BeautifulSoup(document, "html.parser")
+def _first_pass(soup):
     for script in soup(["script", "style"]):
         script.extract()
     for comments in soup.findAll(text=lambda text: isinstance(text, Comment)):
